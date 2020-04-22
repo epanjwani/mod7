@@ -212,9 +212,5 @@ def generatebracket(request):
             error = "League not selected!"
             return render(request,'leagues/generatebracket.html',{"error":error})
     return render(request, 'leagues/enterdata1.html', {"user_leagues":user_leagues})
-    
-def generatebracket2(request):
-    if (request.session['bracket_team_num'] == 4):
-    if (request.session['bracket_team_num']== 8):
                   
 
