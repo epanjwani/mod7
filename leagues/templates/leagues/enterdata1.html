@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+    {% if error%}
+        <p> {{error}} </p>
+    {% endif %}
+    {%if user_leagues%}
+    <p>Select league to enter data</p>
+    <form method="POST">
+    {% csrf_token %}
+    {%for league in user_leagues%}
+        <p>{{league.league_name}}
+        <input type = "radio" name = "league_choice" value ={{league.league_name}}>
+        <br>
+    {%endfor%}
+    <br>
+    <button type="submit">Submit</button>
+    {% endif %}
+    {%if league_teams%}
+    <p>Enter game data!</p>
+    <form method="POST">
+    <p>Team 1 data</p>
+    {% csrf_token %}
+    {%for team in league_teams%}
+        <p>{{team.team_name}}
+        <input type = "radio" name = "team_choice_1" value = {{team.id}}>
+        <br>
+    {%endfor%}
+    <p>Points</p>
+    <input type = "number" name = "score_team_1">
+    <br>
+    <p>Team 2 data</p>
+    {%for team in league_teams%}
+        <p>{{team.team_name}}
+        <input type = "radio" name = "team_choice_2" value = {{team.id}}>
+        <br>
+    {%endfor%}
+    <p>Points</p>
+    <input type = "number" name = "score_team_2">
+    <br>
+    <button type="submit">Submit</button>
+    {% endif %}
+    {%if not league_teams and not user_leagues%}
+    <p>No leagues! Create a league by going back</p>
+    <form action="{% url 'leagues:home' %}">
+        <button type="submit">Return</button>
+    </form>
+    {%endif%}
+    <br>
+    </form>
+  </body>
+</html>
+
+
+

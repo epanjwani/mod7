@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+    {% if error%}
+        <p> {{error}} </p>
+    {% endif %}
+    {%if user_leagues%}
+    <p>Select league to enter data</p>
+    <form method="POST">
+    {% csrf_token %}
+    {%for league in user_leagues%}
+        <p>{{league.league_name}}
+        <input type = "radio" name = "league_choice" value ={{league.league_name}}>
+        <br>
+    {%endfor%}
+    
+    <br>
+    <button type="submit">Submit</button>
+    {% endif %}
+  </body>
+</html>

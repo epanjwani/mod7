@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+    <p>You have successfully been logged out! Click below to return to the welcome page</p>
+    <form action="{% url 'leagues:welcome' %}">
+        <button type="submit">Return</button>
+    </form>
+  </body>
+</html>

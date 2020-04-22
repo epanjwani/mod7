@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+    <p>Welcome to Eashan and Zach's Creative Project!</p>
+    <form action="{% url 'leagues:login' %}">
+        <button type="submit">Login</button>
+    </form>
+    <br>
+    <form action="{% url 'leagues:signup' %}">
+        <button type="submit">Sign-up</button>
+    </form>
+  </body>
+</html>
+

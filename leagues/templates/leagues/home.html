@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load mathfilters %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+    <p>Welcome, {{username}} </p>
+    <form action="{% url 'leagues:createleague' %}">
+        <button type="submit">Create A League!</button>
+    </form>
+    <br>
+    <form action="{% url 'leagues:enterdata1' %}">
+        <button type="submit">Enter game data!</button>
+    </form>
+    <br>
+
+    {%if league_to_team_dict%}
+      {%for league, teamlist in league_to_team_dict.items%}
+        <h3>{{league}}</h3>
+        <table>
+          <tr>
+            <th>Position |</th>
+            <th>Team Name |</th>
+            <th>Games Played |</th>
+            <th>Wins |</th>
+            <th>Draws |</th>
+            <th>Losses |</th>
+            <th>Points |</th>
+            <th>Total Points For |</th>
+            <th>Win Percentage |</th>
+            <th>Points per Game |</th>
+          <tr>
+          {%for team in teamlist%}
+          <tr>
+            <th>{{forloop.counter}}</th>
+            <th>{{team.team_name}}</th>
+            <th>{{team.games_played}}</th>
+            <th>{{team.wins}}</th>
+            <th>{{team.draws}}</th>
+            <th>{{team.losses}}</th>
+            <th>{{team.points}}</th>
+            <th>{{team.total_points}}</th>
+            {%if team.games_played is not 0 %}
+              <th>{{team.wins|div:team.games_played}}</th>
+              <th>{{team.total_points|div:team.games_played}}</th>
+            {%else%}
+              <th>N/A</th>
+              <th>N/A</th>
+            {%endif%}
+          <tr>
+          {%endfor%}
+        </table>
+        <p>Sort by
+        <form method = "POST" id = "{{league}}">
+        {% csrf_token %}
+            <input type = "radio" name = "sort_choice" value = "points">Points</input>
+            <input type = "radio" name = "sort_choice" value = "total_points">Total Points For</input>
+            <input type = "radio" name = "sort_choice" value = "wins">Wins</input>
+            <input type = "radio" name = "sort_choice" value = "draws">Draws</input>
+            <input type = "radio" name = "sort_choice" value = "losses">Losses</input>
+            <input type = "radio" name = "sort_choice" value = "games_played">Games Played</input>
+            <input type= 'hidden' value="{{league}}" name="leaguename"></input>
+          <button type="submit">Sort</button>
+        </form>
+        <hr>
+      {%endfor%}
+    {%endif%}
+    <form action="{% url 'leagues:logout' %}">
+        <button type="submit">Logout</button>
+    </form>
+  </body>
+</html>
