@@ -15,7 +15,10 @@
         <button type="submit">Enter game data!</button>
     </form>
     <br>
-
+    <form action="{% url 'leagues:generatebracket'%}">
+        <button type="submit">Generate playoff bracket!</button>
+    </form>
+    <br>
     {%if league_to_team_dict%}
       {%for league, teamlist in league_to_team_dict.items%}
         <h3>{{league}}</h3>
