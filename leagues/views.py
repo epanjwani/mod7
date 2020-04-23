@@ -117,6 +117,10 @@ def enterteams(request):
                     error = "Can't have two of the same team"
                     return render(request, 'leagues/enterteams.html', {"error": error})
                 secondIndex+=1
+            index+=1
+        new_index = 1
+        while(new_index < int(num_teams)+1):
+            name = "team" + str(new_index)
             team = Team()
             team.team_name = request.POST.get(name)
             team.league_name = League.objects.get(league_name=request.session['league_name'])
@@ -127,10 +131,9 @@ def enterteams(request):
             team.points = 0
             team.total_points = 0 
             team.save()
-            index+=1
+            new_index+=1
         return redirect('leagues:home')
-    return render(request, 'leagues/enterteams.html')      
-
+    return render(request, 'leagues/enterteams.html')
 def enterdata1(request):
     username = request.session['user']
     user_leagues = League.objects.filter(user=username)
@@ -206,11 +209,40 @@ def generatebracket(request):
             request.session['league_name_bracket'] = request.POST.get('league_choice')
             request.session['bracket_team_num'] = League.objects.get(league_name=request.POST.get('league_choice')).num_playoff_teams
             league_teams = Team.objects.filter(league_name=League.objects.get(league_name=request.POST.get('league_choice')))
-            request.session['team_list'] = league_teams
+            teamstopass=[]
+            for team in league_teams:
+                teamstopass.append(team.team_name)
+            request.session['team_list'] = teamstopass
             return redirect('leagues:generatebracket2')
         else:
             error = "League not selected!"
             return render(request,'leagues/generatebracket.html',{"error":error})
     return render(request, 'leagues/enterdata1.html', {"user_leagues":user_leagues})
-                  
-
+    
+def generatebracket2(request):
+    seed_to_team = {}
+    if (request.session['bracket_team_num']==4):
+        index = 1
+        for team in request.session['team_list']:
+            if (index < 5):
+                seed_to_team[index]=team
+                index+=1
+            else:
+                break
+    elif (request.session['bracket_team_num']==8):
+        index = 1
+        for team in request.session['team_list']:
+            if (index < 9):
+                seed_to_team[index]=team
+                index+=1
+            else:
+                break
+    elif (request.session['bracket_team_num']==16):
+        index = 1
+        for team in request.session['team_list']:
+            if (index < 17):
+                seed_to_team[index]=team
+                index+=1
+            else:
+                break
+    return render(request, "leagues/generatebracket2.html", {"seed_to_team":seed_to_team})

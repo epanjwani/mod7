@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Index</title>
+  </head>
+  <body>
+  <p>Seeding:</p>
+    {%for seed, team in seed_to_team.items%}
+        <strong>{{seed}}: {{team}}</strong>
+        <br>
+    {%endfor%}
+    <br>
+    <br>
+    {%if request.session.bracket_team_num == 4%}
+        <strong>Semifinals</strong>
+        <p>Game 1: (1){{seed_to_team.1}} vs. (4){{seed_to_team.4}}</p>
+        <p>Game 2: (2){{seed_to_team.2}} vs. (3){{seed_to_team.3}}</p>
+        <strong>Finals</strong>
+        <p>Game 3: Winner G1 vs. Winner G2</p>
+    {%endif%}
+    {%if request.session.bracket_team_num == 8%}
+        <strong>Quarterfinals</strong>
+        <p>Game 1: (1){{seed_to_team.1}} vs. (8){{seed_to_team.8}}</p>
+        <p>Game 2: (4){{seed_to_team.4}} vs. (5){{seed_to_team.5}}</p>
+        <p>Game 3: (3){{seed_to_team.3}} vs. (6){{seed_to_team.6}}</p>
+        <p>Game 4: (2){{seed_to_team.2}} vs. (7){{seed_to_team.7}}</p>
+        <strong>Semifinals</strong>
+        <p>Game 5: Winner G1 vs. Winner G2</p>
+        <p>Game 6: Winner G3 vs. Winner G4</p>
+        <strong>Finals</strong>
+        <p>Game 7: Winner G5 vs. Winner G6</p>
+    {%endif%}
+    {%if request.session.bracket_team_num == 16%}
+        <strong>Round of 16</strong>
+        <p>Game 1: (1){{seed_to_team.1}} vs. (16){{seed_to_team.16}}</p>
+        <p>Game 2: (8){{seed_to_team.8}} vs. (9){{seed_to_team.9}}</p>
+        <p>Game 3: (5){{seed_to_team.5}} vs. (12){{seed_to_team.12}}</p>
+        <p>Game 4: (4){{seed_to_team.4}} vs. (13){{seed_to_team.13}}</p>
+        <p>Game 5: (3){{seed_to_team.3}} vs. (14){{seed_to_team.14}}</p>
+        <p>Game 6: (6){{seed_to_team.6}} vs. (11){{seed_to_team.11}}</p>
+        <p>Game 7: (7){{seed_to_team.7}} vs. (10){{seed_to_team.10}}</p>
+        <p>Game 8: (2){{seed_to_team.2}} vs. (15){{seed_to_team.15}}</p>
+        <strong>Quarterfinals</strong>
+        <p>Game 9: Winner G1 vs. Winner G2</p>
+        <p>Game 10: Winner G3 vs. Winner G4</p>
+        <p>Game 11: Winner G5 vs. Winner G6</p>
+        <p>Game 12: Winner G7 vs. Winner G8</p>
+        <strong>Semifinals</strong>
+        <p>Game 13: Winner G9 vs. Winner G10</p>
+        <p>Game 14: Winner G11 vs. Winner G12</p>
+        <strong>Finals</strong>
+        <p>Game 15: Winner G13 vs. Winner G14</p>
+    {%endif%}
+    <form action="{% url 'leagues:home' %}">
+        <button type="submit">Return to home</button>
+    </form>
+  </body>
+</html>
